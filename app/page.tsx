@@ -109,7 +109,7 @@ export default function Home() {
 	};
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-950 p-4">
+		<div className="min-h-screen flex items-center justify-center bg-black p-4">
 			<div className="bg-black p-6 pb-3 rounded-lg shadow-md w-full max-w-md border-zinc-800 border-1">
 				<h1 className="text-2xl font-bold mb-6 text-center text-zinc-300">
 					Weather Forecast
@@ -149,76 +149,140 @@ export default function Home() {
 					)}
 				</div>
 
+				{weather_data && (
+					<>
+						<div className="mt-6 p-4 bg-black rounded-lg shadow-lg border border-zinc-800 text-zinc-200">
+							<div className="flex items-start justify-between">
+								<div className="flex-col items-center mb-4">
+									<div>
+										<h2 className="text-2xl font-bold">
+											<a
+												href={`https://www.google.com/maps/search/${weather_data.name},${weather_data.sys.country}`}
+												target="_blank"
+												rel="noopener noreferrer"
+												aria-label={`Open ${weather_data.name} on Google Maps`}
+												className="hover:underline-offset-1 hover:underline hover:text-blue-500">
+												<div className="flex items-center gap-1">
+													<span>
+														{weather_data.name},{" "}
+														{
+															weather_data.sys
+																.country
+														}
+													</span>{" "}
+													<img
+														src="/link-icon-2.svg"
+														alt="Open on Map"
+														className="w-6 h-6"
+													/>
+												</div>
+											</a>
+										</h2>
+									</div>
+
+									<div className="flex justify-normal items-center">
+										<p className="text-lg text-zinc-300 capitalize">
+											{weather_data.weather[0].icon && (
+												<img
+													src={`https://openweathermap.org/img/wn/${weather_data.weather[0].icon}@2x.png`}
+													alt={
+														weather_data.weather[0]
+															.description
+													}
+													className="w-16 h-16 -ml-2" // iconu biraz sola kaydırabiliriz
+												/>
+											)}
+										</p>
+										<p className="text-lg text-zinc-300 capitalize">
+											{
+												weather_data.weather[0]
+													.description
+											}
+										</p>
+									</div>
+								</div>
+								<p className="text-6xl font-extrabold text-zinc-300">
+									{Math.round(weather_data.main.temp)}°C
+								</p>
+							</div>
+
+							<div className="grid grid-cols-2 gap-4 text-sm text-zinc-400">
+								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
+									<span className="font-medium">
+										Feels like:
+									</span>
+									<span className="font-semibold text-zinc-200">
+										{Math.round(
+											weather_data.main.feels_like
+										)}
+										°C
+									</span>
+								</div>
+								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
+									<span className="font-medium">
+										Humidity:
+									</span>
+									<span className="font-semibold text-zinc-200">
+										{weather_data.main.humidity}%
+									</span>
+								</div>
+								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
+									<span className="font-medium">
+										Wind Speed:
+									</span>
+									<span className="font-semibold text-zinc-200">
+										{weather_data.wind.speed} m/s
+									</span>
+								</div>
+								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
+									<span className="font-medium">
+										Pressure:
+									</span>
+									<span className="font-semibold text-zinc-200">
+										{weather_data.main.pressure} hPa
+									</span>
+								</div>
+								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
+									<span className="font-medium">
+										Min Temperature:
+									</span>
+									<span className="font-semibold text-zinc-200">
+										{Math.round(weather_data.main.temp_min)}
+										°C
+									</span>
+								</div>
+								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
+									<span className="font-medium">
+										Max Temperature:
+									</span>
+									<span className="font-semibold text-zinc-200">
+										{Math.round(weather_data.main.temp_max)}
+										°C
+									</span>
+								</div>
+							</div>
+						</div>
+						<div className="flex justify-between mt-2 ">
+							<p
+								style={{ fontSize: "13px" }}
+								className="text-neutral-600 p-1">
+								Weather data from{" "}
+							</p>
+							<p
+								style={{ fontSize: "13px" }}
+								className="text-neutral-600 p-1 underline underline-offset-2 hover:text-neutral-500 cursor-pointer">
+								api.openweathermap.org
+							</p>
+						</div>
+					</>
+				)}
+
 				{error && (
 					<div
 						className="bg-red-950 border border-red-500 text-red-500 px-4 py-3 rounded relative"
 						role="alert">
 						<span className="block sm:inline">{error}</span>
 					</div>
-				)}
-
-				{weather_data && (
-					<>
-						<div className="mt-6 p-4 bg-black border-zinc-800 border-1 rounded-md shadow-sm">
-							<div className="flex justify-between items-center mb-2">
-								<h2 className="text-xl font-semibold text-neutral-300">
-									{" "}
-									{weather_data.name},{" "}
-									{weather_data.sys.country}
-								</h2>
-								<p className="text-neutral-300">
-									<span className="font-semibold text-4xl">
-										{weather_data.main.temp.toFixed(0)}°C
-									</span>
-								</p>
-							</div>
-							<hr style={{ color: "#27272a" }} />
-							<div>
-								<div className="flex items-center mb-1 mt-1">
-									<img
-										src={`http://openweathermap.org/img/w/${weather_data.weather[0].icon}.png`}
-										alt={
-											weather_data.weather[0].description
-										}
-										className="w-12 h-12 mr-2"
-									/>
-									<p className="text-neutral-300 text-lg capitalize">
-										{weather_data.weather[0].description}
-									</p>
-								</div>
-								<p className="text-neutral-300">
-									Feels like:{" "}
-									<span className="font-medium">
-										{weather_data.main.feels_like}°C
-									</span>
-								</p>
-								<p className="text-neutral-300">
-									Humidity:{" "}
-									<span className="font-medium">
-										{weather_data.main.humidity}%
-									</span>
-								</p>
-								<p className="text-neutral-300">
-									Wind Speed:{" "}
-									<span className="font-medium">
-										{weather_data.wind.speed} m/s
-									</span>
-								</p>
-							</div>
-						</div>
-						<div className="flex justify-between ">
-							<p
-								style={{ fontSize: "13px" }}
-								className="text-neutral-600 mt-1 p-1">
-								Weather data from{" "}
-							</p>
-							<p
-								style={{ fontSize: "13px" }}
-								className="text-neutral-600 mt-1 p-1 underline underline-offset-2 hover:text-neutral-500 cursor-pointer">
-								api.openweathermap.org
-							</p>
-						</div>
-					</>
 				)}
 			</div>
 		</div>
