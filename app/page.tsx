@@ -35,26 +35,60 @@ interface CitySuggestion {
 	state?: string;
 }
 
+interface AirPollutionData {
+	list: {
+		main: {
+			aqi: number; // Air Quality Index (1: Good, 2: Fair, 3: Moderate, 4: Poor, 5: Very Poor)
+		};
+		components: {
+			co: number;
+			no: number;
+			no2: number;
+			o3: number;
+			so2: number;
+			pm2_5: number; // Fine particles matter (μg/m³)
+			pm10: number; // Coarse particulate matter (μg/m³)
+			nh3: number; // Ammonia (μg/m³) - Might not always be present
+		};
+		dt: number; // Time of data calculation, Unix, UTC
+	}[];
+}
+
+import WeatherDetails from "./components/container/WeatherDetails";
+import WeatherHeader from "./components/container/WeatherHeader";
+import AirQualityDetails from "./components/container/AirQualityDetails";
+
 export default function Home() {
 	const [weather_data, set_weather_data] = useState<WeatherData | null>(null);
 	const [location_data, set_location_data] = useState<string>("");
 	const [suggestions, set_suggestions] = useState<CitySuggestion[]>([]);
 	const [error, set_error] = useState<string | null>(null);
 
+	const [air_quality_data, set_air_quality_data] =
+		useState<AirPollutionData | null>(null);
+
 	const API_KEY = "f1032ef34fa5f2895e4d4258da67b24d";
 	const weather_url = `https://api.openweathermap.org/data/2.5/weather?q=${location_data}&appid=${API_KEY}&units=metric`;
 	const geo_url = `https://api.openweathermap.org/geo/1.0/direct?q=${location_data}&limit=5&appid=${API_KEY}`;
 
-	const fetch_weather = () => {
+	const fetch_weather = (location_query: string) => {
 		set_suggestions([]);
 		set_error(null);
+		set_air_quality_data(null); // Yeni şehir arandığında önceki hava kalitesi verilerini temizle
 
-		fetch(weather_url)
+		const weather_api_url = `https://api.openweathermap.org/data/2.5/weather?q=${location_query}&appid=${API_KEY}&units=metric`;
+
+		if (!location_query) {
+			set_error("Please enter a city name.");
+			return;
+		}
+
+		fetch(weather_api_url)
 			.then((response) => {
 				if (!response.ok) {
-					if (response.status === 404) {
+					if (response.status === 404)
 						throw new Error("City not found.");
-					} else {
+					else {
 						throw new Error(
 							`Network response was not OK: ${response.status}`
 						);
@@ -63,15 +97,31 @@ export default function Home() {
 				return response.json();
 			})
 			.then((data: WeatherData) => {
+				console.log(data);
 				set_weather_data(data);
+				const { lat, lon } = data.coord;
+				const air_pollution_url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+
+				return fetch(air_pollution_url);
+			})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(
+						`Failed to fetch air quality data: ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then((data: AirPollutionData) => {
+				set_air_quality_data(data);
 			})
 			.catch((error) => {
 				console.error("ERROR WHILE FETCHING DATA: ", error);
 				set_weather_data(null);
+				set_air_quality_data(null);
 				set_error(error.message);
 			});
 	};
-
 	const handle_input_change = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
@@ -79,6 +129,8 @@ export default function Home() {
 		set_location_data(query);
 		set_weather_data(null);
 		set_error(null);
+
+		const geo_url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${API_KEY}`;
 
 		if (query.length > 1) {
 			fetch(geo_url)
@@ -105,9 +157,8 @@ export default function Home() {
 	const handle_suggestion_click = (city: CitySuggestion) => {
 		set_location_data(city.name);
 		set_suggestions([]);
-		fetch_weather();
+		fetch_weather(city.name);
 	};
-
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-black p-4">
 			<div className="bg-black p-6 pb-3 rounded-lg shadow-md w-full max-w-md border-zinc-800 border-1">
@@ -122,7 +173,7 @@ export default function Home() {
 						onChange={handle_input_change}
 						onKeyDown={(event) => {
 							if (event.key === "Enter" && location_data) {
-								fetch_weather();
+								fetch_weather(location_data);
 							}
 						}}
 						className="w-full px-4 py-2 border border-zinc-800 rounded-md focus:outline-none focus:ring-0 focus:ring-blue-500 hover:border-zinc-700 ease-in-out transition  focus:ring-offset-0"
@@ -154,46 +205,45 @@ export default function Home() {
 						<div className="mt-6 p-4 bg-black rounded-lg shadow-lg border border-zinc-800 text-zinc-200">
 							<div className="flex items-start justify-between">
 								<div className="flex-col items-center mb-4">
-									<div>
-										<h2 className="text-2xl font-bold">
-											<a
-												href={`https://www.google.com/maps/search/${weather_data.name},${weather_data.sys.country}`}
-												target="_blank"
-												rel="noopener noreferrer"
-												aria-label={`Open ${weather_data.name} on Google Maps`}
-												className="hover:underline-offset-1 hover:underline hover:text-blue-500">
-												<div className="flex items-center gap-1">
-													<span>
-														{weather_data.name},{" "}
-														{
-															weather_data.sys
-																.country
-														}
-													</span>{" "}
-													<img
-														src="/link-icon-2.svg"
-														alt="Open on Map"
-														className="w-6 h-6"
-													/>
-												</div>
-											</a>
-										</h2>
-									</div>
+									<WeatherHeader
+										name={weather_data.name}
+										country={weather_data.sys.country}
+									/>
 
-									<div className="flex justify-normal items-center">
+									<div className="flex justify-normal items-center mt-2 gap-3">
 										<p className="text-lg text-zinc-300 capitalize">
 											{weather_data.weather[0].icon && (
 												<img
-													src={`https://openweathermap.org/img/wn/${weather_data.weather[0].icon}@2x.png`}
+													src={`weather-icons/${weather_data.weather[0].icon}@2x.svg`}
 													alt={
 														weather_data.weather[0]
-															.description
+															.description ||
+														"01d@2x.svg"
 													}
-													className="w-16 h-16 -ml-2" // iconu biraz sola kaydırabiliriz
+													className="w-8 h-8 ml-2"
+													style={{
+														filter: "invert(80%)",
+													}}
+													onError={(
+														e: React.SyntheticEvent<
+															HTMLImageElement,
+															Event
+														>
+													) => {
+														console.error(
+															"icon cannot found:",
+															weather_data
+																.weather[0].icon
+														);
+														e.currentTarget.src =
+															"/default-weather-icon.svg"; // Veya başka bir genel ikon
+														e.currentTarget.alt =
+															"icon cannot found";
+													}}
 												/>
 											)}
 										</p>
-										<p className="text-lg text-zinc-300 capitalize">
+										<p className="text-lg text-zinc-100 capitalize">
 											{
 												weather_data.weather[0]
 													.description
@@ -206,62 +256,15 @@ export default function Home() {
 								</p>
 							</div>
 
-							<div className="grid grid-cols-2 gap-4 text-sm text-zinc-400">
-								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-									<span className="font-medium">
-										Feels like:
-									</span>
-									<span className="font-semibold text-zinc-200">
-										{Math.round(
-											weather_data.main.feels_like
-										)}
-										°C
-									</span>
-								</div>
-								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-									<span className="font-medium">
-										Humidity:
-									</span>
-									<span className="font-semibold text-zinc-200">
-										{weather_data.main.humidity}%
-									</span>
-								</div>
-								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-									<span className="font-medium">
-										Wind Speed:
-									</span>
-									<span className="font-semibold text-zinc-200">
-										{weather_data.wind.speed} m/s
-									</span>
-								</div>
-								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-									<span className="font-medium">
-										Pressure:
-									</span>
-									<span className="font-semibold text-zinc-200">
-										{weather_data.main.pressure} hPa
-									</span>
-								</div>
-								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-									<span className="font-medium">
-										Min Temperature:
-									</span>
-									<span className="font-semibold text-zinc-200">
-										{Math.round(weather_data.main.temp_min)}
-										°C
-									</span>
-								</div>
-								<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-									<span className="font-medium">
-										Max Temperature:
-									</span>
-									<span className="font-semibold text-zinc-200">
-										{Math.round(weather_data.main.temp_max)}
-										°C
-									</span>
-								</div>
-							</div>
+							<WeatherDetails
+								main={weather_data.main}
+								wind={weather_data.wind}
+							/>
 						</div>
+						{air_quality_data && (
+							<AirQualityDetails data={air_quality_data} />
+						)}
+
 						<div className="flex justify-between mt-2 ">
 							<p
 								style={{ fontSize: "13px" }}
