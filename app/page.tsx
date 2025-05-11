@@ -58,6 +58,7 @@ import WeatherDetails from "./components/container/WeatherDetails";
 import WeatherHeader from "./components/container/WeatherHeader";
 import AirQualityDetails from "./components/container/AirQualityDetails";
 import CityMap from "./components/container/CityMap";
+import SunriseSunsetDetails from "./components/container/SunriseSunsetDetails";
 
 export default function Home() {
 	const [weather_data, set_weather_data] = useState<WeatherData | null>(null);
@@ -160,142 +161,155 @@ export default function Home() {
 		fetch_weather(city.name);
 	};
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-black p-4">
-			<div className="bg-black p-6 pb-3 rounded-lg shadow-md w-full max-w-3xl border-zinc-800 border-1">
-				<h1 className="text-2xl font-bold mb-6 text-center text-zinc-300">
-					Weather Forecast
-				</h1>
-				<div className="relative mb-4">
-					<input
-						type="text"
-						placeholder="Enter city name..."
-						value={location_data}
-						onChange={handle_input_change}
-						onKeyDown={(event) => {
-							if (event.key === "Enter" && location_data) {
-								fetch_weather(location_data);
-							}
-						}}
-						className="w-full px-4 py-2 border border-zinc-800 rounded-md focus:outline-none focus:ring-0 focus:ring-blue-500 hover:border-zinc-700 ease-in-out transition  focus:ring-offset-0"
-						aria-label="City name"
-					/>
-					{suggestions.length > 0 && (
-						<ul className="absolute z-10 w-full bg-black border border-zinc-800 rounded-md mt-1 max-h-40 overflow-y-auto shadow-lg">
-							{suggestions.map((city, index) => (
-								<li
-									className="px-4 py-2 cursor-pointer hover:text-neutral-50 hover:font-semibold transition ease-in-out text-neutral-400"
-									key={index}
-									onClick={() =>
-										handle_suggestion_click(city)
-									}
-									aria-option={
-										index === 0 ? "selected" : undefined
-									}
-									role="option">
-									{city.name}, {city.country}{" "}
-									{city.state && `, ${city.state}`}{" "}
-								</li>
-							))}
-						</ul>
+		<div className="min-h-screen flex-col bg-black p-4">
+			<h1
+				style={{ marginTop: "20px" }}
+				className="text-2xl text-center font-bold mb-6 text-zinc-300">
+				Weather Forecast
+			</h1>
+			<div className="relative mb-4 shadow-md w-full max-w-3xl mx-auto">
+				<input
+					type="text"
+					placeholder="Enter city name..."
+					value={location_data}
+					onChange={handle_input_change}
+					onKeyDown={(event) => {
+						if (event.key === "Enter" && location_data) {
+							fetch_weather(location_data);
+						}
+					}}
+					className="w-full px-4 py-2 border border-zinc-800 rounded-md focus:outline-none focus:ring-0 focus:ring-blue-500 hover:border-zinc-700 ease-in-out transition  focus:ring-offset-0"
+					aria-label="City name"
+				/>
+				{/*
+					suggestions.length > 0 && (
+					<ul className="absolute z-10 w-full bg-black border border-zinc-800 rounded-md mt-1 max-h-40 overflow-y-auto shadow-lg">
+						{suggestions.map((city, index) => (
+							<li
+								className="px-4 py-2 cursor-pointer hover:text-neutral-50 hover:font-semibold transition ease-in-out text-neutral-400"
+								key={index}
+								onClick={() => handle_suggestion_click(city)}
+								aria-option={
+									index === 0 ? "selected" : undefined
+								}
+								role="option">
+								{city.name}, {city.country}{" "}
+								{city.state && `, ${city.state}`}{" "}
+							</li>
+						))}
+					</ul>
+				)
+				*/}
+			</div>
+			{weather_data && (
+				<div className="bg-black p-6 pb-3 rounded-lg shadow-md w-full max-w-3xl mx-auto border-zinc-800 border-1">
+					{weather_data && (
+						<div className="grid grid-cols-2 gap-4">
+							<div className="p-4 bg-black rounded-lg shadow-lg border border-zinc-800 text-zinc-200">
+								<div className="flex items-start justify-between">
+									<div className="flex-col items-center mb-4">
+										<WeatherHeader
+											name={weather_data.name}
+											country={weather_data.sys.country}
+										/>
+
+										<div className="flex justify-normal items-center mt-2 gap-3">
+											<p className="text-lg text-zinc-300 capitalize">
+												{weather_data.weather[0]
+													.icon && (
+													<img
+														src={`weather-icons/${weather_data.weather[0].icon}@2x.svg`}
+														alt={
+															weather_data
+																.weather[0]
+																.description ||
+															"01d@2x.svg"
+														}
+														className="w-8 h-8 ml-2"
+														style={{
+															filter: "invert(80%)",
+														}}
+														onError={(
+															e: React.SyntheticEvent<
+																HTMLImageElement,
+																Event
+															>
+														) => {
+															console.error(
+																"icon cannot found:",
+																weather_data
+																	.weather[0]
+																	.icon
+															);
+															e.currentTarget.src =
+																"/default-weather-icon.svg";
+															e.currentTarget.alt =
+																"icon cannot found";
+														}}
+													/>
+												)}
+											</p>
+											<p className="text-lg text-zinc-100 capitalize">
+												{
+													weather_data.weather[0]
+														.description
+												}
+											</p>
+										</div>
+									</div>
+									<p className="text-6xl font-extrabold text-zinc-300">
+										{Math.round(weather_data.main.temp)}°C
+									</p>
+								</div>
+
+								<WeatherDetails
+									main={weather_data.main}
+									wind={weather_data.wind}
+								/>
+							</div>
+							{air_quality_data && (
+								<AirQualityDetails data={air_quality_data} />
+							)}
+							{weather_data.coord && (
+								<CityMap
+									lat={weather_data.coord.lat}
+									lon={weather_data.coord.lon}
+								/>
+							)}
+							{weather_data.sys &&
+								typeof weather_data.timezone !==
+									"undefined" && (
+									<SunriseSunsetDetails
+										sunrise={weather_data.sys.sunrise}
+										sunset={weather_data.sys.sunset}
+										timezoneOffset={weather_data.timezone}
+									/>
+								)}
+						</div>
+					)}
+
+					<div className="flex justify-between mt-2 ">
+						<p
+							style={{ fontSize: "13px" }}
+							className="text-neutral-600 p-1">
+							Weather data from{" "}
+						</p>
+						<p
+							style={{ fontSize: "13px" }}
+							className="text-neutral-600 p-1 underline underline-offset-2 hover:text-neutral-500 cursor-pointer">
+							api.openweathermap.org
+						</p>
+					</div>
+
+					{error && (
+						<div
+							className="bg-red-950 border border-red-500 text-red-500 px-4 py-3 rounded relative"
+							role="alert">
+							<span className="block sm:inline">{error}</span>
+						</div>
 					)}
 				</div>
-
-				{weather_data && (
-					<div className="grid grid-cols-2 gap-4">
-						<div className="mt-6 p-4 bg-black rounded-lg shadow-lg border border-zinc-800 text-zinc-200">
-							<div className="flex items-start justify-between">
-								<div className="flex-col items-center mb-4">
-									<WeatherHeader
-										name={weather_data.name}
-										country={weather_data.sys.country}
-									/>
-
-									<div className="flex justify-normal items-center mt-2 gap-3">
-										<p className="text-lg text-zinc-300 capitalize">
-											{weather_data.weather[0].icon && (
-												<img
-													src={`weather-icons/${weather_data.weather[0].icon}@2x.svg`}
-													alt={
-														weather_data.weather[0]
-															.description ||
-														"01d@2x.svg"
-													}
-													className="w-8 h-8 ml-2"
-													style={{
-														filter: "invert(80%)",
-													}}
-													onError={(
-														e: React.SyntheticEvent<
-															HTMLImageElement,
-															Event
-														>
-													) => {
-														console.error(
-															"icon cannot found:",
-															weather_data
-																.weather[0].icon
-														);
-														e.currentTarget.src =
-															"/default-weather-icon.svg"; // Veya başka bir genel ikon
-														e.currentTarget.alt =
-															"icon cannot found";
-													}}
-												/>
-											)}
-										</p>
-										<p className="text-lg text-zinc-100 capitalize">
-											{
-												weather_data.weather[0]
-													.description
-											}
-										</p>
-									</div>
-								</div>
-								<p className="text-6xl font-extrabold text-zinc-300">
-									{Math.round(weather_data.main.temp)}°C
-								</p>
-							</div>
-
-							<WeatherDetails
-								main={weather_data.main}
-								wind={weather_data.wind}
-							/>
-
-							<div className="flex justify-between mt-2 ">
-								<p
-									style={{ fontSize: "13px" }}
-									className="text-neutral-600 p-1">
-									Weather data from{" "}
-								</p>
-								<p
-									style={{ fontSize: "13px" }}
-									className="text-neutral-600 p-1 underline underline-offset-2 hover:text-neutral-500 cursor-pointer">
-									api.openweathermap.org
-								</p>
-							</div>
-						</div>
-
-						{air_quality_data && (
-							<AirQualityDetails data={air_quality_data} />
-						)}
-
-						{weather_data.coord && (
-							<CityMap
-								lat={weather_data.coord.lat}
-								lon={weather_data.coord.lon}
-							/>
-						)}
-					</div>
-				)}
-
-				{error && (
-					<div
-						className="bg-red-950 border border-red-500 text-red-500 px-4 py-3 rounded relative"
-						role="alert">
-						<span className="block sm:inline">{error}</span>
-					</div>
-				)}
-			</div>
+			)}
 		</div>
 	);
 }

@@ -31,7 +31,7 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ main, wind }) => {
 				</span>
 			</div>
 			<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-				<span className="font-medium">Wind Speed:</span>
+				<span className="font-medium">Wind Spd.:</span>
 				<span className="font-semibold text-zinc-200">
 					{wind.speed} m/s
 				</span>
@@ -43,13 +43,13 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ main, wind }) => {
 				</span>
 			</div>
 			<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-				<span className="font-medium">Min Temperature:</span>
+				<span className="font-medium">Min Temp.:</span>
 				<span className="font-semibold text-zinc-200">
 					{Math.round(main.temp_min)}°C
 				</span>
 			</div>
 			<div className="flex items-center justify-between p-2 bg-zinc-950 rounded">
-				<span className="font-medium">Max Temperature:</span>
+				<span className="font-medium">Max Temp.:</span>
 				<span className="font-semibold text-zinc-200">
 					{Math.round(main.temp_max)}°C
 				</span>

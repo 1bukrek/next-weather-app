@@ -54,7 +54,7 @@ const AirQualityDetails: React.FC<AirQualityDetailsProps> = ({ data }) => {
 	const aqiInfo = getAqiDescription(main.aqi);
 
 	return (
-		<div className="mt-6 p-4 bg-black rounded-lg shadow-lg border border-zinc-800 text-zinc-200">
+		<div className="p-4 bg-black rounded-lg shadow-lg border border-zinc-800 text-zinc-200">
 			<div className="flex justify-between">
 				<h3 className="text-xl font-semibold mb-2 text-zinc-300">
 					Air Quality:
@@ -63,8 +63,6 @@ const AirQualityDetails: React.FC<AirQualityDetailsProps> = ({ data }) => {
 					{aqiInfo.text}
 				</p>
 			</div>
-			<hr className="mt-0 mb-3" />
-
 			<div className="grid grid-cols-2 gap-4 text-sm text-zinc-400">
 				<div className="flex justify-between items-center p-2 bg-zinc-950 rounded">
 					<p>PM2.5:</p>

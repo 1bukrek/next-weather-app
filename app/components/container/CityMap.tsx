@@ -30,7 +30,6 @@ const CityMap: React.FC<CityMapProps> = ({ lat, lon }) => {
 	const position: [number, number] = [lat, lon];
 
 	return (
-		// Harita için dış div ve boyutlandırma
 		<div className="w-full h-64 md:h-80 rounded-lg overflow-hidden border border-zinc-800 shadow-lg">
 			<MapContainer
 				center={position}
