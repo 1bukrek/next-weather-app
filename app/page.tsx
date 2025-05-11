@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface WeatherData {
 	name: string;
@@ -57,6 +57,7 @@ interface AirPollutionData {
 import WeatherDetails from "./components/container/WeatherDetails";
 import WeatherHeader from "./components/container/WeatherHeader";
 import AirQualityDetails from "./components/container/AirQualityDetails";
+import CityMap from "./components/container/CityMap";
 
 export default function Home() {
 	const [weather_data, set_weather_data] = useState<WeatherData | null>(null);
@@ -97,7 +98,6 @@ export default function Home() {
 				return response.json();
 			})
 			.then((data: WeatherData) => {
-				console.log(data);
 				set_weather_data(data);
 				const { lat, lon } = data.coord;
 				const air_pollution_url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
@@ -161,7 +161,7 @@ export default function Home() {
 	};
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-black p-4">
-			<div className="bg-black p-6 pb-3 rounded-lg shadow-md w-full max-w-md border-zinc-800 border-1">
+			<div className="bg-black p-6 pb-3 rounded-lg shadow-md w-full max-w-3xl border-zinc-800 border-1">
 				<h1 className="text-2xl font-bold mb-6 text-center text-zinc-300">
 					Weather Forecast
 				</h1>
@@ -201,7 +201,7 @@ export default function Home() {
 				</div>
 
 				{weather_data && (
-					<>
+					<div className="grid grid-cols-2 gap-4">
 						<div className="mt-6 p-4 bg-black rounded-lg shadow-lg border border-zinc-800 text-zinc-200">
 							<div className="flex items-start justify-between">
 								<div className="flex-col items-center mb-4">
@@ -260,24 +260,32 @@ export default function Home() {
 								main={weather_data.main}
 								wind={weather_data.wind}
 							/>
+
+							<div className="flex justify-between mt-2 ">
+								<p
+									style={{ fontSize: "13px" }}
+									className="text-neutral-600 p-1">
+									Weather data from{" "}
+								</p>
+								<p
+									style={{ fontSize: "13px" }}
+									className="text-neutral-600 p-1 underline underline-offset-2 hover:text-neutral-500 cursor-pointer">
+									api.openweathermap.org
+								</p>
+							</div>
 						</div>
+
 						{air_quality_data && (
 							<AirQualityDetails data={air_quality_data} />
 						)}
 
-						<div className="flex justify-between mt-2 ">
-							<p
-								style={{ fontSize: "13px" }}
-								className="text-neutral-600 p-1">
-								Weather data from{" "}
-							</p>
-							<p
-								style={{ fontSize: "13px" }}
-								className="text-neutral-600 p-1 underline underline-offset-2 hover:text-neutral-500 cursor-pointer">
-								api.openweathermap.org
-							</p>
-						</div>
-					</>
+						{weather_data.coord && (
+							<CityMap
+								lat={weather_data.coord.lat}
+								lon={weather_data.coord.lon}
+							/>
+						)}
+					</div>
 				)}
 
 				{error && (
