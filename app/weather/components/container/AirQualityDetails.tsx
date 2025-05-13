@@ -1,4 +1,3 @@
-// components/container/AirQualityDetails.tsx
 import React from "react";
 
 interface AirPollutionData {
@@ -27,23 +26,17 @@ interface AirQualityDetailsProps {
 const getAqiDescription = (aqi: number) => {
 	switch (aqi) {
 		case 1:
-			return { text: "Good", color: "text-green-500" };
+			return { text: "Good" };
 		case 2:
-			return { text: "Fair", color: "text-yellow-500" };
+			return { text: "Fair" };
 		case 3:
-			return {
-				text: "Moderate",
-				color: "text-orange-500",
-			};
+			return { text: "Moderate" };
 		case 4:
-			return { text: "Poor", color: "text-red-500" };
+			return { text: "Poor" };
 		case 5:
-			return {
-				text: "Very Poor",
-				color: "text-purple-500",
-			};
+			return { text: "Very Poor" };
 		default:
-			return { text: "N/A", color: "text-zinc-500" };
+			return { text: "N/A" };
 	}
 };
 
@@ -59,9 +52,7 @@ const AirQualityDetails: React.FC<AirQualityDetailsProps> = ({ data }) => {
 				<h3 className="text-xl font-semibold mb-2 text-zinc-300">
 					Air Quality:
 				</h3>
-				<p className={`text-2xl font-bold mb-2 ${aqiInfo.color}`}>
-					{aqiInfo.text}
-				</p>
+				<p className={`text-2xl font-bold mb-2`}>{aqiInfo.text}</p>
 			</div>
 			<div className="grid grid-cols-2 gap-4 text-sm text-zinc-400">
 				<div className="flex justify-between items-center p-2 bg-zinc-950 rounded">

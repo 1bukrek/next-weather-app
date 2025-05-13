@@ -1,11 +1,12 @@
 import React from "react";
 
-interface WeatherDetailsProps {
+export default function WeatherDetails({
+	name,
+	country,
+}: {
 	name: string;
 	country: string;
-}
-
-const WeatherDetails: React.FC<WeatherDetailsProps> = ({ name, country }) => {
+}) {
 	return (
 		<div>
 			<h2 className="text-2xl font-bold">
@@ -29,6 +30,4 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ name, country }) => {
 			</h2>
 		</div>
 	);
-};
-
-export default WeatherDetails;
+}

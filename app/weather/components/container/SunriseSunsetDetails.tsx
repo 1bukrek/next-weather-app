@@ -1,16 +1,14 @@
 import React from "react";
 
-interface SunriseSunsetDetailsProps {
-	sunrise: number;
-	sunset: number;
-	timezoneOffset: number;
-}
-
-const SunriseSunsetDetails: React.FC<SunriseSunsetDetailsProps> = ({
+export default function SunriseSunsetDetails({
 	sunrise,
 	sunset,
 	timezoneOffset,
-}) => {
+}: {
+	sunrise: number;
+	sunset: number;
+	timezoneOffset: number;
+}) {
 	const formatTime = (timestamp: number, offset: number): string => {
 		const utcMilliseconds = timestamp * 1000;
 		const cityOffsetMilliseconds = offset * 1000;
@@ -36,24 +34,24 @@ const SunriseSunsetDetails: React.FC<SunriseSunsetDetailsProps> = ({
 			<h3 className="text-xl font-semibold mb-3 text-zinc-300">
 				Sunlight Details
 			</h3>
-			<div className="flex justify-between items-center mb-2">
-				<p className="text-lg">Sunrise:</p>
-				<p className="font-semibold text-lg">
-					{formatTime(sunrise, timezoneOffset)}
-				</p>
-			</div>
-			<div className="flex justify-between items-center mb-2">
-				<p className="text-lg">Sunset:</p>
-				<p className="font-semibold text-lg">
-					{formatTime(sunset, timezoneOffset)}
-				</p>
-			</div>
-			<div className="flex justify-between items-center">
-				<p className="text-lg">Daytime:</p>
-				<p className="font-semibold text-lg">{`${hours}h ${minutes}m`}</p>
+			<div className="grid grid-cols-1 gap-1 text-sm">
+				<div className="flex justify-between items-center mb-2 p-2 bg-zinc-950 rounded text-zinc-200">
+					<p className="text-lg">Sunrise:</p>
+					<p className="font-semibold text-lg">
+						{formatTime(sunrise, timezoneOffset)}
+					</p>
+				</div>
+				<div className="flex justify-between items-center mb-2 p-2 bg-zinc-950 rounded text-zinc-200">
+					<p className="text-lg">Sunset:</p>
+					<p className="font-semibold text-lg">
+						{formatTime(sunset, timezoneOffset)}
+					</p>
+				</div>
+				<div className="flex justify-between items-center gap-2 p-2 bg-zinc-950 rounded text-zinc-200">
+					<p className="text-lg">Length of Day:</p>
+					<p className="font-semibold text-lg">{`${hours}h ${minutes}m`}</p>
+				</div>
 			</div>
 		</div>
 	);
-};
-
-export default SunriseSunsetDetails;
+}
