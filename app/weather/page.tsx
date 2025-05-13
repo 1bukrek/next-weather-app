@@ -69,6 +69,7 @@ import CityMap from "./components/container/CityMap";
 import SunriseSunsetDetails from "./components/container/SunriseSunsetDetails";
 import RecommendedCities from "./components/search/RecommendedCities";
 import ErrorMessage from "./components/messages/ErrorMessage";
+import SearchBox from "./components/search/SearchBox";
 
 export default function CityData() {
     const [weather_data, set_weather_data] = useState<WeatherData | null>(null);
@@ -82,13 +83,13 @@ export default function CityData() {
     const recommendedCities = [
         "Paris, France",
         "London, UK",
-        "Berlin, Germany",
         "Rome, Italy",
         "Istanbul, Turkey",
-        "Madrid, Spain",
-        "Vienna, Austria",
-        "Amsterdam, Netherlands",
-        "Prague, Czech Republic",
+        "New York, US",
+        "Tokyo, JP",
+        "São Paulo, BR",
+        "Cairo, EG",
+        "Delhi, IN",
     ];
 
     const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
@@ -167,16 +168,15 @@ export default function CityData() {
         } else set_suggestions([]);
     };
 
-    const handle_suggestion_click = (city: CitySuggestion) => {
-        set_location_data(city.name);
-        set_suggestions([]);
-        fetch_weather(city.name);
-    };
-
     const handle_recommended_click = (city_name: string) => {
         set_location_data(city_name);
         set_suggestions([]);
         fetch_weather(city_name);
+    };
+
+    const clear_location_data = () => {
+        set_location_data("");
+        console.log("deneme");
     };
 
     return (
@@ -191,38 +191,12 @@ export default function CityData() {
                 className="shadow-md w-full max-w-3xl mx-auto mb-3 rounded-md"
                 style={{ color: "#696969" }}
             />
-            <div className="relative mb-4 shadow-md w-full max-w-3xl mx-auto">
-                <input
-                    type="text"
-                    placeholder="Enter city name..."
-                    value={location_data}
-                    onChange={handle_input_change}
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter" && location_data)
-                            fetch_weather(location_data);
-                    }}
-                    className="w-full px-4 py-2 border border-zinc-800 rounded-md focus:outline-none focus:ring-0 focus:ring-blue-500 hover:border-zinc-700 ease-in-out transition  focus:ring-offset-0 text-zinc-200 bg-zinc-900" // Added text and background color classes
-                    aria-label="City name"
-                />
-                {/* {suggestions.length > 0 && (
-                    <ul className="absolute z-10 w-full bg-black border border-zinc-800 rounded-md mt-1 max-h-40 overflow-y-auto shadow-lg">
-                        {suggestions.map((city, index) => (
-                            <li
-                                className="px-4 py-2 cursor-pointer hover:text-neutral-50 hover:font-semibold transition ease-in-out text-neutral-400"
-                                key={index}
-                                onClick={() => handle_suggestion_click(city)}
-                                aria-option={
-                                    index === 0 ? "selected" : undefined
-                                }
-                                role="option"
-                            >
-                                {city.name}, {city.country}{" "}
-                                {city.state && `, ${city.state}`}{" "}
-                            </li>
-                        ))}
-                    </ul>
-                )} */}
-            </div>
+            <SearchBox
+                handle_input_change={handle_input_change}
+                fetch_weather={fetch_weather}
+                location_data={location_data}
+                clear_location_data={clear_location_data}
+            />
 
             <RecommendedCities
                 recommendedCities={recommendedCities}

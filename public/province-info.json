@@ -1,0 +1,344 @@
+{
+    "Adana": {
+        "region": "Akdeniz",
+        "population": "Yaklaşık 2.2 milyon",
+        "info": "Türkiye'nin güneyinde, pamuk ve tarım açısından önemli bir il.",
+        "coords": {
+            "lat": 37.0,
+            "lon": 35.32
+        }
+    },
+    "Adıyaman": {
+        "region": "Güneydoğu Anadolu",
+        "population": "Yaklaşık 632 bin",
+        "info": "Nemrut Dağı ile bilinen tarihi bir il.",
+        "coords": {
+            "lat": 37.76,
+            "lon": 38.27
+        }
+    },
+    "Afyonkarahisar": {
+        "region": "Ege",
+        "population": "Yaklaşık 747 bin",
+        "info": "Termal suları ve mermercilikle tanınır.",
+        "coords": {
+            "lat": 38.77,
+            "lon": 30.54
+        }
+    },
+    "Ağrı": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 511 bin",
+        "info": "Ağrı Dağı'na ev sahipliği yapar, doğa turizmi önemlidir.",
+        "coords": {
+            "lat": 39.72,
+            "lon": 43.05
+        }
+    },
+    "Aksaray": {
+        "region": "İç Anadolu",
+        "population": "Yaklaşık 438 bin",
+        "info": "Tarihi İpek Yolu üzerinde bulunur, Kapadokya'ya yakındır.",
+        "coords": {
+            "lat": 38.37,
+            "lon": 34.03
+        }
+    },
+    "Amasya": {
+        "region": "Karadeniz",
+        "population": "Yaklaşık 365 bin",
+        "info": "Yeşilırmak vadisinde kurulu tarihi ve kültürel zenginliklere sahip bir şehirdir.",
+        "coords": {
+            "lat": 40.65,
+            "lon": 35.83
+        }
+    },
+    "Ankara": {
+        "region": "İç Anadolu",
+        "population": "Yaklaşık 5.8 milyon",
+        "info": "Türkiye Cumhuriyeti'nin başkenti ve ikinci büyük şehridir.",
+        "coords": {
+            "lat": 39.93,
+            "lon": 32.86
+        }
+    },
+    "Antalya": {
+        "region": "Akdeniz",
+        "population": "Yaklaşık 2.7 milyon",
+        "info": "Türkiye'nin en önemli turizm merkezlerinden biridir, 'Turizmin Başkenti' olarak anılır.",
+        "coords": {
+            "lat": 36.9,
+            "lon": 30.72
+        }
+    },
+    "Ardahan": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 92 bin",
+        "info": "Türkiye'nin kuzeydoğusunda yer alan küçük bir sınır ilidir.",
+        "coords": {
+            "lat": 41.11,
+            "lon": 42.82
+        }
+    },
+    "Artvin": {
+        "region": "Karadeniz",
+        "population": "Yaklaşık 172 bin",
+        "info": "Doğal güzellikleri, yeşil vadileri ve dağlık yapısıyla bilinir.",
+        "coords": {
+            "lat": 41.18,
+            "lon": 41.82
+        }
+    },
+    "Aydın": {
+        "region": "Ege",
+        "population": "Yaklaşık 1.15 milyon",
+        "info": "Tarihi Efes Antik Kenti'ne yakınlığı ve tarımsal ürünleriyle önemlidir.",
+        "coords": {
+            "lat": 37.85,
+            "lon": 27.85
+        }
+    },
+    "Balıkesir": {
+        "region": "Marmara",
+        "population": "Yaklaşık 1.27 milyon",
+        "info": "Marmara ve Ege Denizi'ne kıyısı olan hem tarım hem de turizm açısından gelişmiş bir il.",
+        "coords": {
+            "lat": 39.65,
+            "lon": 27.89
+        }
+    },
+    "Bilecik": {
+        "region": "Marmara",
+        "population": "Yaklaşık 228 bin",
+        "info": "Osmanlı İmparatorluğu'nun temellerinin atıldığı topraklardır.",
+        "coords": {
+            "lat": 40.05,
+            "lon": 30.05
+        }
+    },
+    "Bingöl": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 283 bin",
+        "info": "Deprem riski yüksek olan, dağlık ve engebeli bir araziye sahip il.",
+        "coords": {
+            "lat": 39.06,
+            "lon": 40.49
+        }
+    },
+    "Bitlis": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 355 bin",
+        "info": "Van Gölü'ne kıyısı olan, tarihi ve kültürel zenginliklere sahip il.",
+        "coords": {
+            "lat": 38.4,
+            "lon": 42.12
+        }
+    },
+    "Bolu": {
+        "region": "Karadeniz",
+        "population": "Yaklaşık 325 bin",
+        "info": "Doğal güzellikleri, gölleri (Abant, Yedigöller) ve ormanlarıyla ünlüdür.",
+        "coords": {
+            "lat": 40.74,
+            "lon": 31.59
+        }
+    },
+    "Burdur": {
+        "region": "Akdeniz",
+        "population": "Yaklaşık 279 bin",
+        "info": "Göller Yöresi'nde yer alır, arkeolojik alanlara sahiptir.",
+        "coords": {
+            "lat": 37.72,
+            "lon": 30.28
+        }
+    },
+    "Bursa": {
+        "region": "Marmara",
+        "population": "Yaklaşık 3.2 milyon",
+        "info": "Türkiye'nin dördüncü büyük şehri, sanayi ve tarih merkezidir. Uludağ'a ev sahipliği yapar.",
+        "coords": {
+            "lat": 40.2,
+            "lon": 29.07
+        }
+    },
+    "Çanakkale": {
+        "region": "Marmara",
+        "population": "Yaklaşık 567 bin",
+        "info": "Çanakkale Boğazı kıyısında yer alır, tarihi Gelibolu Yarımadası buradadır.",
+        "coords": {
+            "lat": 40.15,
+            "lon": 26.41
+        }
+    },
+    "Çankırı": {
+        "region": "İç Anadolu",
+        "population": "Yaklaşık 196 bin",
+        "info": "Tuz Mağarası ile bilinen küçük bir İç Anadolu ilidir.",
+        "coords": {
+            "lat": 40.6,
+            "lon": 33.62
+        }
+    },
+    "Çorum": {
+        "region": "Karadeniz",
+        "population": "Yaklaşık 528 bin",
+        "info": "Hitit uygarlığının başkenti Hattuşa'ya ev sahipliği yapar.",
+        "coords": {
+            "lat": 40.55,
+            "lon": 34.95
+        }
+    },
+    "Denizli": {
+        "region": "Ege",
+        "population": "Yaklaşık 1.06 milyon",
+        "info": "Pamukkale travertenleri ile dünyaca ünlüdür.",
+        "coords": {
+            "lat": 37.78,
+            "lon": 29.09
+        }
+    },
+    "Diyarbakır": {
+        "region": "Güneydoğu Anadolu",
+        "population": "Yaklaşık 1.8 milyon",
+        "info": "Tarihi surları ve kültürel mirasıyla Güneydoğu'nun önemli bir merkezidir.",
+        "coords": {
+            "lat": 37.92,
+            "lon": 40.24
+        }
+    },
+    "Düzce": {
+        "region": "Karadeniz",
+        "population": "Yaklaşık 405 bin",
+        "info": "1999 depremlerinden sonra il statüsü kazanmıştır.",
+        "coords": {
+            "lat": 40.83,
+            "lon": 31.16
+        }
+    },
+    "Edirne": {
+        "region": "Marmara",
+        "population": "Yaklaşık 419 bin",
+        "info": "Türkiye'nin Avrupa'ya açılan kapısı, tarihi Selimiye Camii buradadır.",
+        "coords": {
+            "lat": 41.66,
+            "lon": 26.56
+        }
+    },
+    "Elazığ": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 591 bin",
+        "info": "Hazar Gölü'ne ev sahipliği yapar, Fırat Nehri kıyısında yer alır.",
+        "coords": {
+            "lat": 38.68,
+            "lon": 39.22
+        }
+    },
+    "Erzincan": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 243 bin",
+        "info": "Doğu Anadolu'da yer alan, tarım ve hayvancılıkla geçinen bir il.",
+        "coords": {
+            "lat": 39.74,
+            "lon": 39.49
+        }
+    },
+    "Erzurum": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 749 bin",
+        "info": "Kış sporları ve tarihi eserleriyle Doğu Anadolu'nun önemli bir merkezidir.",
+        "coords": {
+            "lat": 39.9,
+            "lon": 41.28
+        }
+    },
+    "Eskişehir": {
+        "region": "İç Anadolu",
+        "population": "Yaklaşık 915 bin",
+        "info": "Genç nüfusu ve canlı sosyal hayatıyla bilinen modern bir şehirdir.",
+        "coords": {
+            "lat": 39.77,
+            "lon": 30.52
+        }
+    },
+    "Gaziantep": {
+        "region": "Güneydoğu Anadolu",
+        "population": "Yaklaşık 2.1 milyon",
+        "info": "Gastronomisi ve tarihi Zeugma Mozaik Müzesi ile ünlüdür.",
+        "coords": {
+            "lat": 37.06,
+            "lon": 37.38
+        }
+    },
+    "Giresun": {
+        "region": "Karadeniz",
+        "population": "Yaklaşık 453 bin",
+        "info": "Fındık üretimiyle öne çıkar, Karadeniz'in doğal güzelliklerine sahiptir.",
+        "coords": {
+            "lat": 40.91,
+            "lon": 38.41
+        }
+    },
+    "Gümüşhane": {
+        "region": "Karadeniz",
+        "population": "Yaklaşık 148 bin",
+        "info": "Dağlık yapısı ve tarihi İpek Yolu üzerindeki konumuyla bilinir.",
+        "coords": {
+            "lat": 40.47,
+            "lon": 39.72
+        }
+    },
+    "Hakkari": {
+        "region": "Güneydoğu Anadolu",
+        "population": "Yaklaşık 280 bin",
+        "info": "Türkiye'nin en güneydoğusunda yer alan, dağlık ve zorlu coğrafyaya sahip bir il.",
+        "coords": {
+            "lat": 37.58,
+            "lon": 43.74
+        }
+    },
+    "Hatay": {
+        "region": "Akdeniz",
+        "population": "Yaklaşık 1.6 milyon",
+        "info": "Medeniyetler beşiği olarak anılır, zengin tarihi ve kültürel mirasa sahiptir.",
+        "coords": {
+            "lat": 36.2,
+            "lon": 36.17
+        }
+    },
+    "Iğdır": {
+        "region": "Doğu Anadolu",
+        "population": "Yaklaşık 244 bin",
+        "info": "Ağrı Dağı'nın eteklerinde yer alır, dört ülkeye sınırı vardır.",
+        "coords": {
+            "lat": 39.92,
+            "lon": 43.08
+        }
+    },
+    "Isparta": {
+        "region": "Akdeniz",
+        "population": "Yaklaşık 453 bin",
+        "info": "Gül ve gül ürünleriyle meşhurdur, Göller Yöresi'nde bulunur.",
+        "coords": {
+            "lat": 37.77,
+            "lon": 30.55
+        }
+    },
+    "İstanbul": {
+        "region": "Marmara",
+        "population": "Yaklaşık 15.9 milyon",
+        "info": "Türkiye'nin en kalabalık şehri, iki kıtayı birleştiren tarihi ve kültürel başkent.",
+        "coords": {
+            "lat": 41.01,
+            "lon": 28.98
+        }
+    },
+    "İzmir": {
+        "region": "Ege",
+        "population": "Yaklaşık 4.4 milyon",
+        "info": "Türkiye'nin üçüncü büyük şehri, Ege Bölgesi'nin incisi.",
+        "coords": {
+            "lat": 38.42,
+            "lon": 27.14
+        }
+    }
+}
